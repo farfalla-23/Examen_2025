@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Cursos</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Cursos</h2>
+        <div class="mt-4">
+            {% for curso in cursos %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3 class="mb-0">{{ curso.nombre_curso }} - {{ curso.turno }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for alumno in curso.alumno_set.all %}
+                                <li class="list-group-item">{{ alumno.nombre }} {{ alumno.apellido }}</li>
+                            {% empty %}
+                                <li class="list-group-item">No hay alumnos</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-warning" role="alert">
+                    No hay cursos disponibles.
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'inicio' %}" class="btn btn-link mt-3">Volver</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
