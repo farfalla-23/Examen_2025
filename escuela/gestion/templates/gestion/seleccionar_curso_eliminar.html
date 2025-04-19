@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Curso</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Seleccionar curso para eliminar alumnos</h1>
+        <div class="list-group mt-4">
+            {% for curso in cursos %}
+            <a href="{% url 'eliminar_alumno' curso.id %}" class="list-group-item list-group-item-action">
+                {{ curso.nombre_curso }}
+            </a>
+            {% empty %}
+                <p>No hay cursos disponibles.</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'inicio' %}" class="btn btn-secondary mt-3">Volver al Inicio</a>
+    </div>
+</body>
+</html>

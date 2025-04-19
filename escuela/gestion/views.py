@@ -31,17 +31,23 @@ def ver_curso(request):
     cursos = Curso.objects.all()
     return render(request, 'gestion/ver_cursos.html',{'cursos':cursos})
 
-# def seleccionar_curso(request):
-#     cursos = Curso.objects.all()
-#     return render(request, 'gestion/seleccionar_curso.html', {'cursos': cursos})
+#Nuevo
+def eliminar_alumno(request, curso_id):
+    curso = Curso.objects.get(id=curso_id)
+    alumnos = Alumno.objects.filter(id_curso_alumno=curso)
 
-# def eliminar_alumnos_curso(request, id_curso):
-#     curso = get_object_or_404(Curso, pk=id_curso)
-#     alumnos = Alumno.objects.filter(id_curso_alumno=curso.id_curso)
-#     return render(request, 'gestion/eliminar_alumnos.html', {'curso': curso, 'alumnos': alumnos})
+    if request.method == 'POST':
+        alumno_id = request.POST.get('alumno_id') 
+        if alumno_id:  
+            try:
+                alumno = Alumno.objects.get(id=alumno_id)
+                alumno.delete() 
+                return redirect('eliminar_alumno', curso_id=curso_id) 
+            except Alumno.DoesNotExist:
+                return ("Alumno no encontrado")
 
-# def borrar_alumno(request, id_alumno):
-#     alumno = get_object_or_404(Alumno, pk=id_alumno)
-#     id_curso = alumno.id_curso_alumno
-#     alumno.delete()
-#     return redirect('eliminar_alumnos_curso', id_curso=id_curso)
+    return render(request, 'gestion/eliminar_alumno.html', {'curso': curso, 'alumnos': alumnos})
+
+def seleccionar_curso_eliminar(request):
+    cursos = Curso.objects.all()
+    return render(request, 'gestion/seleccionar_curso_eliminar.html', {'cursos': cursos})
